@@ -4,9 +4,9 @@ from Catalog.views import ProductViewSet, CategoryViewSet, DiscountViewSet
 
 
 router = DefaultRouter()
-router.register('products', ProductViewSet, 'product')
-router.register('categories', CategoryViewSet, 'category')
-router.register('discounts', DiscountViewSet, 'discount')
+router.register(r'products', ProductViewSet, 'product')
+router.register(r'categories', CategoryViewSet, 'category')
+router.register(r'discounts', DiscountViewSet, 'discount')
 
 
 urlpatterns = [

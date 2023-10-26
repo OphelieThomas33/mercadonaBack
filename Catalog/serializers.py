@@ -2,12 +2,6 @@ from rest_framework import serializers
 from Catalog.models import *
 
 
-class ProductSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Product
-        fields = '__all__'
-
-
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
@@ -17,4 +11,14 @@ class CategorySerializer(serializers.ModelSerializer):
 class DiscountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Discount
-        fields = '__all__'
+        fields = ('id', 'start_date', 'end_date', 'percentage', 'is_valid')
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    discount = DiscountSerializer()
+    category = CategorySerializer(many=True)
+
+    class Meta:
+        model = Product
+        fields = ('id', 'label', 'description', 'image', 'price', 'category', 'has_valid_discount', 'discount', 'discounted_price', )
+
