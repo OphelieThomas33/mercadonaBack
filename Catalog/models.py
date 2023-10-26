@@ -43,12 +43,14 @@ class Product(models.Model):
     category = models.ManyToManyField(Category)
     discount = models.ForeignKey(Discount, models.SET_NULL, blank=True, null=True)
 
+    @property
     def has_valid_discount(self):
         if self.discount.is_valid:
             return True
         else:
             return False
 
+    @property
     def discounted_price(self):
         if self.discount.is_valid:
             return round((self.price * (1-(self.discount.percentage/100))), 2)

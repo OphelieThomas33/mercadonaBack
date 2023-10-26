@@ -8,7 +8,6 @@ router.register(r'products', ProductViewSet, 'product')
 router.register(r'categories', CategoryViewSet, 'category')
 router.register(r'discounts', DiscountViewSet, 'discount')
 
-
 urlpatterns = [
     path('', include(router.urls))
 ]

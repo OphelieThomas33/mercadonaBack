@@ -16,8 +16,28 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view as swagger_get_schema_view
+
+# Creation of API documentation
+schema_view = swagger_get_schema_view(
+    openapi.Info(
+        title="Mercadona API",
+        default_version="1.0.0",
+        description="Api documentation of Mercadona App"
+    ),
+    public=True,
+)
+
 
 urlpatterns = [
     path(r'admin/', admin.site.urls),
-    path(r'api/', include('Catalog.urls')),
+    # path(r'api/', include('Catalog.urls')),
+    path(r'api/',
+         include([
+             path('', include('Catalog.urls')),
+             path('swagger/schema', schema_view.with_ui(renderer='swagger', cache_timeout=0), name="swagger-schema"),
+            ])),
 ]
+
+

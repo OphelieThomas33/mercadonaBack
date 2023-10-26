@@ -15,6 +15,5 @@ class DiscountViewSet(viewsets.ModelViewSet):
 
 
 class ProductViewSet(viewsets.ModelViewSet):
-    queryset = Product.objects.all()
+    queryset = Product.objects.prefetch_related('category').select_related('discount').all()
     serializer_class = ProductSerializer
-
