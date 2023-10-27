@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls.static import static
+from django.conf import settings
 
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view as swagger_get_schema_view
@@ -32,12 +34,10 @@ schema_view = swagger_get_schema_view(
 
 urlpatterns = [
     path(r'admin/', admin.site.urls),
-    # path(r'api/', include('Catalog.urls')),
     path(r'api/',
          include([
              path('', include('Catalog.urls')),
              path('swagger/schema', schema_view.with_ui(renderer='swagger', cache_timeout=0), name="swagger-schema"),
             ])),
-]
-
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
