@@ -7,6 +7,7 @@ class Category(models.Model):
     label = models.CharField(max_length=50)
 
     class Meta:
+        db_table = "catalog_category"
         verbose_name = "category"
         verbose_name_plural = "categories"
 
@@ -18,6 +19,9 @@ class Discount(models.Model):
     start_date = models.DateTimeField(default=datetime.today())
     end_date = models.DateTimeField(default=datetime.today())
     percentage = models.DecimalField(max_digits=6, decimal_places=2, default=0)
+
+    class Meta:
+        db_table = "catalog_discount"
 
     @property
     def is_valid(self):
@@ -41,6 +45,9 @@ class Product(models.Model):
     image = models.ImageField(upload_to="images/")
     category = models.ManyToManyField(Category)
     discount = models.ForeignKey(Discount, models.SET_NULL, blank=True, null=True)
+
+    class Meta:
+        db_table = "catalog_product"
 
     @property
     def has_valid_discount(self):

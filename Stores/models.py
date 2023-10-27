@@ -6,6 +6,7 @@ class Company(models.Model):
     name = models.CharField(max_length=50)
 
     class Meta:
+        db_table = "stores_company"
         verbose_name = "company"
         verbose_name_plural = "companies"
 
@@ -17,6 +18,7 @@ class Country(models.Model):
     name = models.CharField(max_length=50)
 
     class Meta:
+        db_table = "stores_country"
         verbose_name = "country"
         verbose_name_plural = "countries"
 
@@ -31,6 +33,9 @@ class Store(models.Model):
     city = models.CharField(max_length=50)
     country = models.ForeignKey("Country", on_delete=models.CASCADE)
     company = models.ForeignKey("Company", on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = "stores_stores"
 
     def __str__(self):
         return self.name
