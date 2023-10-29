@@ -1,4 +1,6 @@
 from datetime import datetime
+
+from attr import attr
 from django.db import models
 
 
@@ -45,7 +47,7 @@ class Product(models.Model):
     description = models.TextField(default='')
     price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to="images/")
-    category = models.ManyToManyField(Category)
+    category = models.ManyToManyField(Category, related_name='products')
     discount = models.ForeignKey(Discount, models.SET_NULL, blank=True, null=True)
 
     class Meta:

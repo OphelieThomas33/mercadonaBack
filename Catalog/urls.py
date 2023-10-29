@@ -9,5 +9,4 @@ router.register(r'discounts', DiscountViewSet, 'discount')
 
 urlpatterns = [
     path("", include(router.urls)),
-    # path("categories/", CategoryViewSet.as_view(), name='categories'),
 ]
