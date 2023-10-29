@@ -3,9 +3,15 @@ from Catalog.models import *
 
 
 class CategorySerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Category
-        fields = '__all__'
+        fields = ('id', 'label', 'parent', 'subcategories', 'icon',)
+
+    def get_fields(self):
+        fields = super(CategorySerializer, self).get_fields()
+        fields['subcategories'] = CategorySerializer(many=True)
+        return fields
 
 
 class DiscountSerializer(serializers.ModelSerializer):

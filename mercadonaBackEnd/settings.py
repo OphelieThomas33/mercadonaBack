@@ -33,6 +33,9 @@ DEBUG = env.bool('DEBUG', default=True)
 
 ALLOWED_HOSTS = [env('ALLOWED_HOSTS')]
 
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = False
+
 # Databases
 DATABASES = {
     "default": {
@@ -63,12 +66,13 @@ INSTALLED_APPS = [
     "Stores",
 
 ]
-#
-# # Use a default_filter of Django
-# REST_FRAMEWORK = {
-#     'DEFAULT_FILTER_BACKENDS': (
-#         'django_filters.rest_framework.DjangoFilterBackend')
-# }
+
+# Use a default_filter of Django
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS':
+        ['django_filters.rest_framework.DjangoFilterBackend']
+}
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -80,13 +84,6 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "corsheaders.middleware.CorsMiddleware",
 ]
-
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_CREDENTIALS = False
-
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:4200",
-# ]
 
 
 ROOT_URLCONF = "mercadonaBackEnd.urls"
@@ -145,6 +142,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = "static/"
+
 MEDIA_URL = "/assets/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'assets/')
 

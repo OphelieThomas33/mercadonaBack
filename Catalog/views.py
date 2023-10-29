@@ -1,12 +1,13 @@
-from rest_framework import viewsets
-from django.http import HttpResponse
+from rest_framework import viewsets, generics
+from rest_framework.generics import get_object_or_404
+
 from Catalog.serializers import ProductSerializer, CategorySerializer, DiscountSerializer
 from Catalog.models import Product, Category, Discount
 
 
 # Create your views here.
 class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.all()
+    queryset = Category.objects.select_related().all()
     serializer_class = CategorySerializer
 
 
