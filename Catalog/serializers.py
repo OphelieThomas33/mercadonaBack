@@ -56,10 +56,7 @@ class DiscountSerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     discount = DiscountSerializer()
-    category = serializers.SlugRelatedField(
-        many=True,
-        read_only=True,
-        slug_field='label')
+    category = CategorySerializer(many=True)
 
     class Meta:
         model = Product
