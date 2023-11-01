@@ -57,6 +57,7 @@ class DiscountSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     discount = DiscountSerializer()
     category = CategorySerializer(many=True)
+    # image = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
@@ -70,5 +71,12 @@ class ProductSerializer(serializers.ModelSerializer):
             'has_valid_discount',
             'discount',
             'discounted_price')
+
+    # def get_image_url(self, product):
+    #     request = self.context.get('request')
+    #     image = product.image.url
+    #     return request.build_absolute_uri(image)
+
+
 
 

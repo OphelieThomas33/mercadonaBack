@@ -1,6 +1,5 @@
 from datetime import datetime
 
-from attr import attr
 from django.db import models
 
 

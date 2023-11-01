@@ -1,9 +1,11 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, status, generics
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from Catalog.serializers import ProductSerializer, CategorySerializer, DiscountSerializer
 from Catalog.models import Product, Category, Discount
+from rest_framework.parsers import MultiPartParser, FormParser
 
 
 # Create your views here.
@@ -26,6 +28,12 @@ class ProductViewSet(viewsets.ModelViewSet):
         .select_related('discount')\
         .all()
     serializer_class = ProductSerializer
+
+
+    # def get(self, request):
+    #     product = Product.objects.all()
+    #     serializer = ProductSerializer(product, many=True)
+    #     return Response(data=request.data, status=status.HTTP_200_OK)
 
     # @action(detail=False)
     # def discounted_products(self, request):
