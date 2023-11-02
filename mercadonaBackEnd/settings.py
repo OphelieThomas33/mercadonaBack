@@ -71,7 +71,8 @@ INSTALLED_APPS = [
 # Use a default_filter of Django
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS':
-        ['django_filters.rest_framework.DjangoFilterBackend']
+        ['django_filters.rest_framework.DjangoFilterBackend'],
+    'UPLOADED_FILES_USE_URL': False,
 }
 
 

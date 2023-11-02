@@ -45,7 +45,7 @@ class Product(models.Model):
     label = models.CharField(max_length=50)
     description = models.TextField(default='')
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    image = models.ImageField(upload_to="images/")
+    image = models.ImageField(upload_to="assets/images/")
     category = models.ManyToManyField(Category, related_name='products')
     discount = models.ForeignKey(Discount, models.SET_NULL, blank=True, null=True)
 
