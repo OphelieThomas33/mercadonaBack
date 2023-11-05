@@ -2,7 +2,32 @@ from rest_framework import serializers
 from Catalog.models import *
 
 
+class DiscountSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Discount
+        fields = ('id',
+                  'start_date',
+                  'end_date',
+                  'percentage',
+                  'is_valid')
+
+
+class ReadCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ('id',
+                  'label',
+                  'parent',
+                  'icon',
+                  'subcategories',
+                  'products'
+                  )
+
+
 class ReadProductSerializer(serializers.ModelSerializer):
+    discount = DiscountSerializer()
+    category = ReadCategorySerializer(many=True)
+
     class Meta:
         model = Product
         fields = (
@@ -44,20 +69,9 @@ class CategorySerializer(serializers.ModelSerializer):
                   )
 
 
-class DiscountSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Discount
-        fields = ('id',
-                  'start_date',
-                  'end_date',
-                  'percentage',
-                  'is_valid')
-
-
 class ProductSerializer(serializers.ModelSerializer):
     discount = DiscountSerializer()
     category = CategorySerializer(many=True)
-    # image = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
@@ -71,12 +85,3 @@ class ProductSerializer(serializers.ModelSerializer):
             'has_valid_discount',
             'discount',
             'discounted_price')
-
-    # def get_image_url(self, product):
-    #     request = self.context.get('request')
-    #     image = product.image.url
-    #     return request.build_absolute_uri(image)
-
-
-
-
