@@ -33,9 +33,16 @@ DEBUG = env.bool('DEBUG', default=True)
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
-# SECURE_CROSS_ORIGIN_OPENER_POLICY
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_CREDENTIALS = False
+# CORS
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:4200',
+    'http://mercadona-app.s3-website-us-east-1.amazonaws.com'
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:4200',
+    'http://mercadona-app.s3-website-us-east-1.amazonaws.com'
+]
 
 # Databases
 DATABASES = {
@@ -59,6 +66,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "rest_framework.authtoken",
+    "dj_rest_auth",
     "django_filters",
     "drf_yasg",
     "corsheaders",
@@ -77,9 +86,9 @@ REST_FRAMEWORK = {
 
 
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -87,7 +96,6 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 
 ]
-
 
 ROOT_URLCONF = "mercadonaBackEnd.urls"
 
@@ -153,4 +161,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'assets/')
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Integration of new auth_user_model
 AUTH_USER_MODEL = "Accounts.CustomUser"

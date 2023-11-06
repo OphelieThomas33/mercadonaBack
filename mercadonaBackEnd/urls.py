@@ -34,6 +34,7 @@ schema_view = swagger_get_schema_view(
 
 urlpatterns = [
     path(r'admin/', admin.site.urls),
+    path(r'dj-rest-auth/', include('dj_rest_auth.urls')),
     path(r'api/',
          include([
              path('', include('Catalog.urls')),
