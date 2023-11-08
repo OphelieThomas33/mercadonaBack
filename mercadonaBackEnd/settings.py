@@ -44,6 +44,20 @@ CSRF_TRUSTED_ORIGINS = [
     'http://mercadona-app.s3-website-us-east-1.amazonaws.com'
 ]
 
+CORS_ALLOW_HEADERS = (
+    "accept",
+    "authorization",
+    "access-control-allow-credentials",
+    "access-control-allow-origin",
+    "content-type",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+)
+CORS_ALLOWED_CREDENTIALS = True
+SECURE_CROSS_ORIGIN_OPENER_POLICY = None
+SECURE_REFERRER_POLICY = 'no-referrer-when-downgrade'
+
 # Databases
 DATABASES = {
     "default": {
@@ -67,6 +81,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "rest_framework.authtoken",
+    "rest_framework_simplejwt",
     "dj_rest_auth",
     "django_filters",
     "drf_yasg",
@@ -82,13 +97,29 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS':
         ['django_filters.rest_framework.DjangoFilterBackend'],
     'UPLOADED_FILES_USE_URL': False,
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+
+    ),
+    # 'DEFAULT_PERMISSION_CLASSES': (
+    #     'rest_framework.permissions.IsAdminUser',
+    #     'rest_framework.permissions.IsAuthenticatedOrReadOnly'
+    # ),
+}
+
+REST_AUTH = {
+    'USE_JWT': True,
+    'JWT_AUTH_COOKIE': 'access-token',
+    'JWT_AUTH_REFRESH_COOKIE': 'refresh-token',
+    'JWT_AUTH_HTTPONLY': False,
+    'JWT_AUTH_COOKIE_USE_CSRF': True
 }
 
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",

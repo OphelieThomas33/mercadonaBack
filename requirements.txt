@@ -13,4 +13,5 @@ Pillow==10.1.0
 environ~=1.0
 drf-yasg==1.21.7
 django-cors-headers==4.3.0
-dj-rest-auth
+dj-rest-auth==5.0.1
+djangorestframework-simplejwt==5.3.0

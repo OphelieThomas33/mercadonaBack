@@ -38,6 +38,7 @@ urlpatterns = [
     path(r'api/',
          include([
              path('', include('Catalog.urls')),
+             path('', include('Accounts.urls')),
              path('swagger/schema', schema_view.with_ui(renderer='swagger', cache_timeout=0), name="swagger-schema"),
             ])),
 ] + static(settings.STATIC_URL,
