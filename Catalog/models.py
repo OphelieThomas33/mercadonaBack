@@ -3,7 +3,7 @@ from datetime import datetime
 from django.db import models
 
 
-# Create your models here.
+# category table with parent categories and subcategories
 class Category(models.Model):
     label = models.CharField(max_length=50)
     parent = models.ForeignKey('self', related_name='subcategories', on_delete=models.CASCADE, null=True)
@@ -18,6 +18,7 @@ class Category(models.Model):
         return self.label
 
 
+# discount table
 class Discount(models.Model):
     start_date = models.DateTimeField(default=datetime.today())
     end_date = models.DateTimeField(default=datetime.today())
@@ -26,6 +27,8 @@ class Discount(models.Model):
     class Meta:
         db_table = "catalog_discount"
 
+    # calculate if the discount is valid
+    # based on dates
     @property
     def is_valid(self):
         if self.percentage is not None and self.percentage != 0:
@@ -41,6 +44,9 @@ class Discount(models.Model):
         return f'{self.start_date} {self.end_date} {self.percentage}'
 
 
+# product table
+# one product can have only one promotion
+# one product can have many categories (parent category and subcategory)
 class Product(models.Model):
     label = models.CharField(max_length=50)
     description = models.TextField(default='')
@@ -52,6 +58,7 @@ class Product(models.Model):
     class Meta:
         db_table = "catalog_product"
 
+    # indicates if the product is currently being promoted
     @property
     def has_valid_discount(self):
         if self.discount.is_valid:
@@ -59,6 +66,7 @@ class Product(models.Model):
         else:
             return False
 
+    # returns discounted price if the product is currently being promoted
     @property
     def discounted_price(self):
         if self.discount.is_valid:

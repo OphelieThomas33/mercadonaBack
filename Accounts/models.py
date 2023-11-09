@@ -4,7 +4,8 @@ from django.contrib.auth.models import AbstractUser
 import Stores.models
 
 
-# Create your models here.
+# custom user with addition of the date of birth field
+# this user could be an employee or a consumer
 class CustomUser(AbstractUser):
     birth_date = models.DateField(default=date.today)
 
@@ -12,6 +13,7 @@ class CustomUser(AbstractUser):
         db_table = "accounts_custom_user"
 
 
+# customer table (useful for the evolution of the site)
 class Customer(CustomUser):
 
     class Meta:
@@ -20,6 +22,7 @@ class Customer(CustomUser):
         verbose_name_plural = "customers"
 
 
+# employee table
 class Employee(CustomUser):
     company = models.ForeignKey(Stores.models.Company, on_delete=models.CASCADE)
 

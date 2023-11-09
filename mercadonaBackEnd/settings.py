@@ -39,13 +39,9 @@ CORS_ALLOWED_ORIGINS = [
     'http://mercadona-app.s3-website-us-east-1.amazonaws.com'
 ]
 
-CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:4200',
-    'http://mercadona-app.s3-website-us-east-1.amazonaws.com'
-]
-
 CORS_ALLOW_HEADERS = (
     "accept",
+    "accept-encoding",
     "authorization",
     "access-control-allow-credentials",
     "access-control-allow-origin",
@@ -54,9 +50,15 @@ CORS_ALLOW_HEADERS = (
     "x-csrftoken",
     "x-requested-with",
 )
+
 CORS_ALLOWED_CREDENTIALS = True
 SECURE_CROSS_ORIGIN_OPENER_POLICY = None
-SECURE_REFERRER_POLICY = 'no-referrer-when-downgrade'
+SECURE_REFERRER_POLICY = 'unsafe_url'
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:4200',
+    'http://mercadona-app.s3-website-us-east-1.amazonaws.com'
+]
 
 # Databases
 DATABASES = {
@@ -92,27 +94,23 @@ INSTALLED_APPS = [
 
 ]
 
-# Use a default_filter of Django
+# default settings for rest_framework
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS':
         ['django_filters.rest_framework.DjangoFilterBackend'],
     'UPLOADED_FILES_USE_URL': False,
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
-
-    ),
-    # 'DEFAULT_PERMISSION_CLASSES': (
-    #     'rest_framework.permissions.IsAdminUser',
-    #     'rest_framework.permissions.IsAuthenticatedOrReadOnly'
-    # ),
+    )
 }
 
+#
 REST_AUTH = {
     'USE_JWT': True,
     'JWT_AUTH_COOKIE': 'access-token',
     'JWT_AUTH_REFRESH_COOKIE': 'refresh-token',
     'JWT_AUTH_HTTPONLY': False,
-    'JWT_AUTH_COOKIE_USE_CSRF': True
+    'JWT_AUTH_COOKIE_USE_CSRF': True,
 }
 
 
@@ -151,7 +149,6 @@ WSGI_APPLICATION = "mercadonaBackEnd.wsgi.application"
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
@@ -182,7 +179,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
-
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 MEDIA_URL = "assets/"
@@ -190,7 +186,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'assets/')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Integration of new auth_user_model

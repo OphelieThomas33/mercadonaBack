@@ -2,6 +2,7 @@ from rest_framework import serializers
 from Catalog.models import *
 
 
+# Information on promotions for discount to send to the API
 class DiscountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Discount
@@ -12,6 +13,7 @@ class DiscountSerializer(serializers.ModelSerializer):
                   'is_valid')
 
 
+# Information to send to the API
 class ReadCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
@@ -24,6 +26,7 @@ class ReadCategorySerializer(serializers.ModelSerializer):
                   )
 
 
+# serializer allowing the display of products in categories
 class ReadProductSerializer(serializers.ModelSerializer):
     discount = DiscountSerializer()
     category = ReadCategorySerializer(many=True)
@@ -42,6 +45,7 @@ class ReadProductSerializer(serializers.ModelSerializer):
             'discounted_price')
 
 
+# serializer allowing the display of subcategories in categories
 class ReadSubcategoriesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
@@ -54,7 +58,9 @@ class ReadSubcategoriesSerializer(serializers.ModelSerializer):
                   )
 
 
+# Information on categories to send to the API
 class CategorySerializer(serializers.ModelSerializer):
+    # call to a readOnlySerializer to allow the display of subcategories and products
     subcategories = ReadSubcategoriesSerializer(many=True, read_only=True)
     products = ReadProductSerializer(many=True, read_only=True)
 
@@ -69,7 +75,9 @@ class CategorySerializer(serializers.ModelSerializer):
                   )
 
 
+# Information on products to send to the API
 class ProductSerializer(serializers.ModelSerializer):
+    # call to a readOnlySerializer to allow the display of categories and discount
     discount = DiscountSerializer()
     category = CategorySerializer(many=True)
 

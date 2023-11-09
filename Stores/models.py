@@ -1,7 +1,7 @@
 from django.db import models
 
 
-# Create your models here.
+# Company table
 class Company(models.Model):
     name = models.CharField(max_length=50)
 
@@ -14,6 +14,7 @@ class Company(models.Model):
         return self.name
 
 
+# country table
 class Country(models.Model):
     name = models.CharField(max_length=50)
 
@@ -26,6 +27,9 @@ class Country(models.Model):
         return self.name
 
 
+# store table
+# a store can have only one country
+# a store can have only one company
 class Store(models.Model):
     name = models.CharField(max_length=50)
     address = models.CharField(max_length=255)
