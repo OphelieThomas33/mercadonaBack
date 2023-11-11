@@ -14,13 +14,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.contrib.auth.decorators import permission_required
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view as swagger_get_schema_view
+from rest_framework.routers import DefaultRouter
 
+from mercadonaBackEnd.settings import env
 
 # Creation of API documentation
 schema_view = swagger_get_schema_view(
@@ -30,6 +33,8 @@ schema_view = swagger_get_schema_view(
         description="Api documentation of Mercadona App"
     ),
     public=True,
+    url=env('SWAGGER_URL')
+
 )
 
 # creating main routes for back end application
@@ -40,7 +45,8 @@ urlpatterns = [
          include([
              path('', include('Catalog.urls')),
              path('', include('Accounts.urls')),
-             path('swagger/schema', schema_view.with_ui(renderer='swagger', cache_timeout=0), name="swagger-schema"),
+             path('swagger/schema', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+             path('swagger/redoc', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
             ])),
 ] + static(settings.STATIC_URL,
            document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL,

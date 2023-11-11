@@ -34,11 +34,7 @@ DEBUG = env.bool('DEBUG', default=True)
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 # CORS
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:4200',
-    'http://mercadona-app.s3-website-us-east-1.amazonaws.com'
-]
-
+CORS_ALLOWED_ORIGINS = (env.list('CORS_ALLOWED_ORIGINS'))
 CORS_ALLOW_HEADERS = (
     "accept",
     "accept-encoding",
@@ -50,15 +46,10 @@ CORS_ALLOW_HEADERS = (
     "x-csrftoken",
     "x-requested-with",
 )
-
 CORS_ALLOWED_CREDENTIALS = True
-SECURE_CROSS_ORIGIN_OPENER_POLICY = None
-SECURE_REFERRER_POLICY = 'unsafe_url'
 
-CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:4200',
-    'http://mercadona-app.s3-website-us-east-1.amazonaws.com'
-]
+# CSRF
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS')
 
 # Databases
 DATABASES = {
@@ -113,6 +104,11 @@ REST_AUTH = {
     'JWT_AUTH_COOKIE_USE_CSRF': True,
 }
 
+# SWAGGER SETTINGS
+SWAGGER_SETTINGS = {
+    'LOGIN_URL': '/admin/login/',
+    'LOGOUT_URL': '/admin/logout/'
+}
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
