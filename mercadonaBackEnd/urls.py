@@ -40,11 +40,11 @@ schema_view = swagger_get_schema_view(
 # creating main routes for back end application
 urlpatterns = [
     path(r'admin/', admin.site.urls),
-    path(r'dj-rest-auth/', include('dj_rest_auth.urls')),
     path(r'api/',
          include([
              path('', include('Catalog.urls')),
              path('', include('Accounts.urls')),
+             path('auth/', include('dj_rest_auth.urls')),
              path('swagger/schema', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
              path('swagger/redoc', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
             ])),
