@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date
 
 from django.db import models
 
@@ -20,8 +20,8 @@ class Category(models.Model):
 
 # discount table
 class Discount(models.Model):
-    start_date = models.DateTimeField(default=datetime.today())
-    end_date = models.DateTimeField(default=datetime.today())
+    start_date = models.DateField()
+    end_date = models.DateField()
     percentage = models.DecimalField(max_digits=6, decimal_places=2, default=0)
 
     class Meta:
@@ -32,8 +32,8 @@ class Discount(models.Model):
     @property
     def is_valid(self):
         if self.percentage is not None and self.percentage != 0:
-            now = datetime.today().date()
-            if self.start_date.date() <= now < self.end_date.date():
+            now = date.today()
+            if self.start_date <= now < self.end_date:
                 return True
             else:
                 return False
@@ -51,7 +51,7 @@ class Product(models.Model):
     label = models.CharField(max_length=50)
     description = models.TextField(default='')
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    image = models.ImageField(upload_to="assets/images/")
+    image = models.ImageField(upload_to="images/")
     category = models.ManyToManyField(Category, related_name='products')
     discount = models.ForeignKey(Discount, models.SET_NULL, blank=True, null=True)
 
