@@ -6,8 +6,8 @@ from django.db import models
 # category table with parent categories and subcategories
 class Category(models.Model):
     label = models.CharField(max_length=50)
-    parent = models.ForeignKey('self', related_name='subcategories', on_delete=models.CASCADE, null=True)
-    icon = models.ImageField(upload_to="images/", null=True)
+    parent = models.ForeignKey('self', related_name='subcategories', on_delete=models.CASCADE, blank=True, null=True)
+    icon = models.ImageField(upload_to="images/", blank=True, null=True)
 
     class Meta:
         db_table = "catalog_category"
