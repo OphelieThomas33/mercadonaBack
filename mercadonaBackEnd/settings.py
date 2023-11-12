@@ -34,7 +34,7 @@ DEBUG = env.bool('DEBUG', default=True)
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 # CORS
-CORS_ALLOWED_ORIGINS = (env.list('CORS_ALLOWED_ORIGINS'))
+#CORS_ALLOWED_ORIGINS = (env.list('CORS_ALLOWED_ORIGINS'))
 CORS_ALLOW_HEADERS = (
     "accept",
     "accept-encoding",
