@@ -69,7 +69,6 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ('id',
                   'label',
                   'parent',
-                  'icon',
                   'subcategories',
                   'products'
                   )
@@ -77,9 +76,6 @@ class CategorySerializer(serializers.ModelSerializer):
 
 # Information on products to send to the API
 class ProductSerializer(serializers.ModelSerializer):
-    # call to a readOnlySerializer to allow the display of categories and discount
-    discount = DiscountSerializer()
-    category = CategorySerializer(many=True)
 
     class Meta:
         model = Product
