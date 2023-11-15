@@ -76,6 +76,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 # Information on products to send to the API
 class ProductSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField(required=False)
 
     class Meta:
         model = Product

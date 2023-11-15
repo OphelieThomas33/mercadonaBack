@@ -1,18 +1,18 @@
 from datetime import date
-
 from django.db import models
 
 
-# def upload_path(instance, filename):
-#     return '/'.join([])
-#
+# send product image in assets/images folder
+def file_location(instance, filename):
+    file_path = f"assets/images/{instance.label}-{filename} "
+    return file_path
 
 
 # category table with parent categories and subcategories
 class Category(models.Model):
     label = models.CharField(max_length=50)
     parent = models.ForeignKey('self', related_name='subcategories', on_delete=models.CASCADE, blank=True, null=True)
-    icon = models.ImageField(upload_to="assets/images/", blank=True, null=True)
+    icon = models.ImageField(upload_to=file_location, blank=True, null=True)
 
     class Meta:
         db_table = "catalog_category"
@@ -56,7 +56,7 @@ class Product(models.Model):
     label = models.CharField(max_length=50)
     description = models.TextField(default='')
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    image = models.ImageField(upload_to="assets/images/", blank=True, null=True)
+    image = models.ImageField(upload_to=file_location, blank=True, null=True)
     category = models.ManyToManyField(Category, related_name='products')
     discount = models.ForeignKey(Discount, models.SET_NULL, blank=True, null=True)
 
