@@ -11,6 +11,8 @@ class CustomUser(AbstractUser):
 
     class Meta:
         db_table = "accounts_custom_user"
+        verbose_name = "Utilisateur"
+        verbose_name_plural = "Utilisateurs"
 
 
 # customer table (useful for the evolution of the site)
@@ -18,8 +20,8 @@ class Customer(CustomUser):
 
     class Meta:
         db_table = "accounts_customer"
-        verbose_name = "customer"
-        verbose_name_plural = "customers"
+        verbose_name = "Client"
+        verbose_name_plural = "Clients"
 
 
 # employee table
@@ -28,5 +30,5 @@ class Employee(CustomUser):
 
     class Meta:
         db_table = "accounts_employee"
-        verbose_name = "employee"
-        verbose_name_plural = "employees"
+        verbose_name = "Employé"
+        verbose_name_plural = "Employés"

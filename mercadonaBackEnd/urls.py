@@ -21,8 +21,12 @@ from django.conf import settings
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view as swagger_get_schema_view
 
-# from Catalog.views import ImageAPIView
 from mercadonaBackEnd.settings import env
+
+# back office customization
+admin.site.site_header = "Back-office Mercadona"
+admin.site.site_url = env('CORS_ALLOWED_ORIGINS')
+admin.site.index_title = "Gestion des données"
 
 # Creation of API documentation
 schema_view = swagger_get_schema_view(
@@ -38,6 +42,7 @@ schema_view = swagger_get_schema_view(
 
 # creating main routes for back end application
 urlpatterns = [
+    path(r'admin/doc/', include('django.contrib.admindocs.urls')),
     path(r'admin/', admin.site.urls),
     path(r'api/',
          include([
@@ -47,7 +52,6 @@ urlpatterns = [
              path('swagger/schema', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
              path('swagger/redoc', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
             ])),
-    # path(r'assets/images', ImageAPIView.as_view()),
 ] + static(settings.STATIC_URL,
            document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL,
                                                         document_root=settings.MEDIA_ROOT)

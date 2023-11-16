@@ -7,8 +7,8 @@ class Company(models.Model):
 
     class Meta:
         db_table = "stores_company"
-        verbose_name = "company"
-        verbose_name_plural = "companies"
+        verbose_name = "Entreprise"
+        verbose_name_plural = "Entreprises"
 
     def __str__(self):
         return self.name
@@ -20,8 +20,8 @@ class Country(models.Model):
 
     class Meta:
         db_table = "stores_country"
-        verbose_name = "country"
-        verbose_name_plural = "countries"
+        verbose_name = "Pays"
+        verbose_name_plural = "Pays"
 
     def __str__(self):
         return self.name
@@ -40,6 +40,8 @@ class Store(models.Model):
 
     class Meta:
         db_table = "stores_stores"
+        verbose_name = "Magasin"
+        verbose_name_plural = "Magasins"
 
     def __str__(self):
         return self.name

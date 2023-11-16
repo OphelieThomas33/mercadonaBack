@@ -16,6 +16,20 @@ class CustomUserAdmin(UserAdmin):
 
 # models to display in django admin panel
 admin.site.register(Customer)
-admin.site.register(Employee)
 admin.site.register(CustomUser, CustomUserAdmin)
 
+
+@admin.register(Employee)
+class EmployeeAdmin(admin.ModelAdmin):
+    # employee display fields
+    list_display = (
+        'first_name',
+        'last_name',
+        'email',
+        'get_groups'
+    )
+
+    # get groups list by employee
+    @admin.display(description="Groupes")
+    def get_groups(self, obj):
+        return "\n".join([g.name for g in obj.groups.all()])
